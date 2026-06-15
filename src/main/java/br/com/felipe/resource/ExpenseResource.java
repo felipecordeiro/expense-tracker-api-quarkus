@@ -1,5 +1,7 @@
 package br.com.felipe.resource;
 
+import java.util.stream.Collectors;
+
 import br.com.felipe.dto.CreateExpenseRequest;
 import br.com.felipe.service.ExpenseService;
 
@@ -31,11 +33,16 @@ public class ExpenseResource {
         }
 
         @GET
-        public Response list() {
+        public Response list(
+                        @QueryParam("page") int page,
+                        @QueryParam("size") int size) {
 
-                return Response.ok(
-                                service.list()).build();
+                var expenses = service.list();
+                var paginatedExpenses = expenses.stream()
+                                .skip(page * size)
+                                .limit(size);
 
+                return Response.ok(paginatedExpenses.collect(Collectors.toList())).build();
         }
 
         @GET
