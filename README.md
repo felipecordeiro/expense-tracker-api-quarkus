@@ -156,6 +156,12 @@ Example invalid request:
 
 ## Run Locally
 
+## Quick Start
+
+```bash
+docker compose up --build
+```
+
 ### Start PostgreSQL
 
 ```bash
